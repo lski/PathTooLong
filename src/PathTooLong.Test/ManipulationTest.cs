@@ -50,7 +50,7 @@ namespace PathTooLong.Test {
 
 			Action a = () => {
 				_manager.Delete(folder1);
-            };
+			};
 
 			a.ShouldNotThrow();
 		}
@@ -73,6 +73,72 @@ namespace PathTooLong.Test {
 			};
 
 			a.ShouldNotThrow();
+		}
+
+		[TestMethod]
+		public void CopyFileTest() {
+
+			var path = _paths.Combine(_baseDirectory, "manip/tmp-file.txt");
+			var dest = _paths.Combine(_baseDirectory, "manip/tmp-file-copy.txt");
+
+			CreateFile(path, "This should get deleted");
+
+			_scanner.Exists(dest).Should().BeFalse("The destination file should not already exist");
+			_scanner.Exists(path).Should().BeTrue("The file didnt get created so cant be deleted in the test");
+
+			_manager.Copy(path, dest);
+
+			_scanner.Exists(dest).Should().BeTrue("The destination needs to have been created");
+
+			Action a = () => {
+				_manager.Delete(dest);
+				_manager.Delete(path);
+			};
+
+			a.ShouldNotThrow();
+		}
+
+		[TestMethod]
+		public void CopyFolderTest() {
+
+			var path = _paths.Combine(_baseDirectory, "manip/tmp-folder");
+			var pathFile = _paths.Combine(path, "temp-file.txt");
+			var dest = _paths.Combine(_baseDirectory, "manip/tmp-folder2");
+			var destFile = _paths.Combine(dest, "temp-file.txt");
+
+			_scanner.Exists(dest).Should().BeFalse("The destination folder should not already exist");
+
+			CreateFolder(path);
+			CreateFile(pathFile, "This should get deleted");
+			
+			_scanner.Exists(path).Should().BeTrue("The folder didnt get created so cant be deleted in the test");
+			_scanner.Exists(pathFile).Should().BeTrue("The file didnt get created so cant be deleted in the test");
+
+			_manager.Copy(path, dest);
+
+			_scanner.Exists(dest).Should().BeTrue("The destination folder needs to have been created");
+			_scanner.Exists(destFile).Should().BeTrue("The destination file needs to have been copied");
+
+			Action a = () => {
+				_manager.Delete(dest);
+				_manager.Delete(path);
+			};
+
+			a.ShouldNotThrow();
+		}
+
+
+		[TestMethod]
+		public void TempCopyFolderTest() {
+
+			var path = _paths.Combine(_baseDirectory, @"D:\Users\Lee\Development\Work\Personal");
+			var dest = _paths.Combine(_baseDirectory, @"D:\Users\Lee\Development\Work\Personal-2");
+
+			_scanner.Exists(dest).Should().BeFalse("The destination folder should not already exist");
+
+			_manager.Copy(path, dest);
+
+			_scanner.Exists(dest).Should().BeTrue("The destination folder needs to have been created");
 		}
 	}
 }

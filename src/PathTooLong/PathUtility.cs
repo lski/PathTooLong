@@ -8,7 +8,7 @@ namespace PathTooLong {
 	public class PathUtility : IPathUtility {
 
 		public const string LOCAL_FS_PREFIX = @"\\?\";
-		const short MAX_FILE_SIZE = 255;
+		const short MAX_FILE_SIZE = 200;
 		static Regex _longUNCRegEx = null;
 
 		public string ParsePath(string path) {

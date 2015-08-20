@@ -8,6 +8,8 @@ using System.Runtime.InteropServices;
 namespace PathTooLong {
 
 	public class Win32IO : IWin32IO {
+		
+		const int MAX_RETRY_COUNT = 2;
 
 		public bool DeleteFile(string path) {
 
@@ -49,7 +51,6 @@ namespace PathTooLong {
 		public void SetFileAttributes(string path, FileAttributes attributes) {
 
 			if (path == null) {
-
 				throw new ArgumentNullException(nameof(path));
 			}
 
@@ -63,5 +64,54 @@ namespace PathTooLong {
 
 			return new FindResults(path);
 		}
-    }
+
+		public void CopyFile(string source, string destination) {
+
+			if (source == null) {
+				throw new ArgumentNullException(nameof(source));
+			}
+			if (destination == null) {
+				throw new ArgumentNullException(nameof(destination));
+			}
+			
+			int attempt = 0;
+			while(attempt++ < MAX_RETRY_COUNT) {
+				
+				if (Kernel32.CopyFile(source, destination, true)) {
+					return;
+				}
+			}
+
+			var errorcode = Marshal.GetLastWin32Error();
+
+			if (errorcode == Kernel32.ERROR_ACCESS_DENIED) {
+				throw new Win32Exception(errorcode);
+			}
+			
+			throw new Win32Exception(errorcode);
+		}
+
+		public void CreateDirectory(string path) {
+
+			if (path == null) {
+				throw new ArgumentNullException(nameof(path));
+			}
+
+			int attempt = 0;
+			while(attempt++ < MAX_RETRY_COUNT) {
+				
+				if(Kernel32.CreateDirectory(path, IntPtr.Zero)) {
+					return;
+				}
+			}
+
+			var errorcode = Marshal.GetLastWin32Error();
+
+			if (errorcode == Kernel32.ERROR_ACCESS_DENIED) {
+				throw new Win32Exception(errorcode);
+			}
+
+			throw new Win32Exception(errorcode);
+		}
+	}
 }

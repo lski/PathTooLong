@@ -63,7 +63,7 @@ namespace PathTooLong {
 			var parsedPath = _pathUtility.ParsePath(path);
 
 			return _win32IO.GetFileAttributes(parsedPath);
-        }
+		}
 
 		/// <summary>
 		/// Returns information about the directory or file in the path

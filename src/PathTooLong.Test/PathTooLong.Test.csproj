@@ -80,6 +80,7 @@
     <Content Include="search\search-file-01.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="copy\" />
     <Folder Include="manip\" />
   </ItemGroup>
   <Choose>

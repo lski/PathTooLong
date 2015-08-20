@@ -1,6 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace PathTooLong {
@@ -12,6 +10,7 @@ namespace PathTooLong {
 
 		public const uint ERROR_PATH_NOT_FOUND = 0x3;
 		public const uint ERROR_FILE_NOT_FOUND = 0x2;
+		public const uint ERROR_ACCESS_DENIED = 0x5;
 
 		[DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
 		internal static extern IntPtr FindFirstFile(string lpFileName, out WIN32_FIND_DATA lpFindFileData);
@@ -35,5 +34,13 @@ namespace PathTooLong {
 
 		[DllImport("kernel32.dll", EntryPoint = "SetFileAttributesW", CharSet = CharSet.Unicode, SetLastError = true)]
 		internal static extern bool SetFileAttributes(string lpFileName, uint dwFileAttributes);
+
+		[DllImport("kernel32.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		internal static extern bool CopyFile([MarshalAs(UnmanagedType.LPWStr)]string lpExistingFileName, [MarshalAs(UnmanagedType.LPWStr)]string lpNewFileName, [MarshalAs(UnmanagedType.Bool)]bool bFailIfExists);
+
+		[DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+		[return: MarshalAs(UnmanagedType.Bool)]
+		internal static extern bool CreateDirectory(string lpPathName, IntPtr lpSecurityAttributes);
 	}
 }

@@ -23,5 +23,9 @@ namespace PathTooLong {
 		/// <exception cref="ArgumentNullException"></exception>
 		/// <exception cref="Exceptions.DirectoryNotDeletedException"></exception>
 		bool RemoveDirectory(string path);
+
+		void CopyFile(string source, string destination);
+
+		void CreateDirectory(string path);
 	}
 }

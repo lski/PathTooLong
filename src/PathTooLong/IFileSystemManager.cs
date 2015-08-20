@@ -54,10 +54,10 @@ namespace PathTooLong {
 
 		//void Move(DirectoryData source, string destination, bool overwrite = false);
 
-		//void Copy(string source, string destination, bool overwrite = false);
+		void Copy(string source, string destination, bool overwrite = false);
 
-		//void Copy(FileData source, string destination, bool overwrite = false);
+		void Copy(FileData source, string destination, bool overwrite = false);
 
-		//void Copy(DirectoryData source, string destination, bool overwrite = false);
+		void Copy(DirectoryData source, string destination, bool overwrite = false);
 	}
 }
