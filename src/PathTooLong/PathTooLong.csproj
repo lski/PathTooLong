@@ -44,10 +44,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\AccessDeniedException.cs" />
+    <Compile Include="Exceptions\CopyFileException.cs" />
+    <Compile Include="Exceptions\CreateDirectoryException.cs" />
+    <Compile Include="Exceptions\DirectoryAccessDeniedException.cs" />
     <Compile Include="Exceptions\DirectoryNotDeletedException.cs" />
+    <Compile Include="Exceptions\FileAccessDeniedException.cs" />
     <Compile Include="Exceptions\FileNotDeletedException.cs" />
     <Compile Include="Exceptions\InvalidFileSearchException.cs" />
     <Compile Include="Exceptions\NotDeletedException.cs" />
+    <Compile Include="Exceptions\PathExistsException.cs" />
     <Compile Include="Exceptions\ReadOnlyException.cs" />
     <Compile Include="Exceptions\SetAttributesException.cs" />
     <Compile Include="Extensions\DateTimeExt.cs" />

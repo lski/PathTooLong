@@ -28,22 +28,7 @@ namespace PathTooLong {
 			_scanner = scanner;
 			_win32IO = win32IO;
 		}
-
-		public class PathExistsException : IOException {
-
-			public string Path { get; private set; }
-
-			public PathExistsException(string path) : base("") {
-
-				Path = path;
-			}
-
-			public PathExistsException(string message, string path, Exception inner) : base(message, inner) {
-
-				Path = path;
-			}
-		}
-
+		
 		public void Copy(string source, string destination, bool overwrite = false) {
 
 			if (!_scanner.Exists(source)) {
@@ -62,14 +47,24 @@ namespace PathTooLong {
 
 		public void Copy(DirectoryData source, string destination, bool overwrite = false) {
 
-			if (_scanner.Exists(destination) && !overwrite) {
+			var attributes = _scanner.GetAttributes(destination);
+			var exists = attributes.Exists();
+
+			if (exists && !overwrite) {
 				throw new PathExistsException(destination);
 			}
 
 			var destPath = _paths.ParsePath(destination);
 
-			_win32IO.CreateDirectory(destPath);
-			_win32IO.SetFileAttributes(destPath, source.Attributes);
+			// If exists then simple fill it, unless its a file then delete it. If it doesnt exist create it
+			if (!exists) {
+				_win32IO.CreateDirectory(destPath);
+				_win32IO.SetFileAttributes(destPath, source.Attributes);
+			}
+			else if(attributes.IsFile()) {
+
+				_win32IO.DeleteFile(destPath);
+			}
 			
 			foreach (var item in _scanner.EnumerateDirectoryContents(source.Path)) {
 
@@ -86,11 +81,19 @@ namespace PathTooLong {
 
 		public void Copy(FileData source, string destination, bool overwrite = false) {
 
-			if (_scanner.Exists(destination) && !overwrite) {
-				throw new PathExistsException(destination);
+			var exists = _scanner.Exists(destination);
+			var destPath = _paths.ParsePath(destination);
+
+			if (exists) {
+
+				if (!overwrite) {
+					throw new PathExistsException(destination);
+				}
+
+				_win32IO.DeleteFile(destPath);
 			}
-			
-			_win32IO.CopyFile(_paths.ParsePath(source.Path), _paths.ParsePath(destination));
+
+			_win32IO.CopyFile(_paths.ParsePath(source.Path), destPath);
 		}
 
 		public void Delete(string path) {

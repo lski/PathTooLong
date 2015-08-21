@@ -7,6 +7,7 @@ namespace PathTooLong {
 
 		/// <exception cref="ArgumentNullException"></exception>
 		/// <exception cref="Exceptions.FileNotDeletedException"></exception>
+		/// <exception cref="Exceptions.FileAccessDeniedException"></exception>
 		bool DeleteFile(string path);
 
 		/// <exception cref="ArgumentNullException"></exception>
@@ -22,10 +23,17 @@ namespace PathTooLong {
 
 		/// <exception cref="ArgumentNullException"></exception>
 		/// <exception cref="Exceptions.DirectoryNotDeletedException"></exception>
+		/// <exception cref="Exceptions.DirectoryAccessDeniedException"></exception>
 		bool RemoveDirectory(string path);
 
+		/// <exception cref="ArgumentNullException"></exception>
+		/// <exception cref="Exceptions.CopyFileException"></exception>
+		/// <exception cref="Exceptions.FileAccessDeniedException"></exception>
 		void CopyFile(string source, string destination);
 
+		/// <exception cref="ArgumentNullException"></exception>
+		/// <exception cref="Exceptions.CreateDirectoryException"></exception>
+		/// <exception cref="Exceptions.DirectoryAccessDeniedException"></exception>
 		void CreateDirectory(string path);
 	}
 }

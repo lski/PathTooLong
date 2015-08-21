@@ -48,16 +48,42 @@ namespace PathTooLong {
 		/// <exception cref="Exceptions.PathNotFoundException"></exception>
 		void SetAttributes(string path, FileAttributes attributes);
 
+		/// <summary>
+		/// Copies an item located at the source to the destination. 
+		/// 
+		/// If the item is a file then it simply copies it, if the item is a directory it recursively copies the files from each sub directory. 
+		/// If the destination exists and overright = false then it will error, if overwrite = true then it will merge if a directory or delete and copy if a file. 
+		/// </summary>
+		/// <param name="source">The path of the item to copy</param>
+		/// <param name="destination"></param>
+		/// <param name="overwrite"></param>
+		void Copy(string source, string destination, bool overwrite = false);
+
+		/// <summary>
+		/// Copies a file to the destination. 
+		/// 
+		/// If the destination exists and overright = false then it will error and is the prefered usage, if overwrite = true means it will delete and then copy if a file. 
+		/// </summary>
+		/// <param name="source"></param>
+		/// <param name="destination"></param>
+		/// <param name="overwrite"></param>
+		void Copy(FileData source, string destination, bool overwrite = false);
+
+		/// <summary>
+		/// Copies a directory to the destination recursively copying the files from each sub directory. 
+		/// 
+		/// If the destination exists and overright = false then it will error and is the prefered usage, if overwrite = true means it will merge the directory and copy and replace the files and subdirectories.
+		/// It will not delete any files that dont match the files from the source.
+		/// </summary>
+		/// <param name="source"></param>
+		/// <param name="destination"></param>
+		/// <param name="overwrite"></param>
+		void Copy(DirectoryData source, string destination, bool overwrite = false);
+
 		//void Move(string source, string destination, bool overwrite = false);
 
 		//void Move(FileData source, string destination, bool overwrite = false);
 
 		//void Move(DirectoryData source, string destination, bool overwrite = false);
-
-		void Copy(string source, string destination, bool overwrite = false);
-
-		void Copy(FileData source, string destination, bool overwrite = false);
-
-		void Copy(DirectoryData source, string destination, bool overwrite = false);
 	}
 }

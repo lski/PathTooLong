@@ -5,7 +5,7 @@ namespace PathTooLong.Exceptions {
 
 	public class FileNotDeletedException : NotDeletedException {
 
-		const string DEFAULT_MESSAGE = "The file could not be deleted, see inner exception for details";
+		const string DEFAULT_MESSAGE = "The file could not be deleted";
 
 		public override bool IsDirectory { get; } = false;
 

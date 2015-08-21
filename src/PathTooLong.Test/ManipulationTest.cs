@@ -7,7 +7,7 @@ using PathTooLong.Exceptions;
 namespace PathTooLong.Test {
 
 	[TestClass]
-	public class ManipulationTest : BaseTest {
+	public class ManagerTest : BaseTest {
 
 		protected IFileSystemManager _manager;
 
@@ -125,20 +125,6 @@ namespace PathTooLong.Test {
 			};
 
 			a.ShouldNotThrow();
-		}
-
-
-		[TestMethod]
-		public void TempCopyFolderTest() {
-
-			var path = _paths.Combine(_baseDirectory, @"D:\Users\Lee\Development\Work\Personal");
-			var dest = _paths.Combine(_baseDirectory, @"D:\Users\Lee\Development\Work\Personal-2");
-
-			_scanner.Exists(dest).Should().BeFalse("The destination folder should not already exist");
-
-			_manager.Copy(path, dest);
-
-			_scanner.Exists(dest).Should().BeTrue("The destination folder needs to have been created");
 		}
 	}
 }

@@ -17,12 +17,21 @@ namespace PathTooLong {
 				throw new ArgumentNullException(nameof(path));
 			}
 
-			if (!Kernel32.DeleteFile(path)) {
+			int attempt = 0;
+			while (attempt++ < MAX_RETRY_COUNT) {
 
-				throw new FileNotDeletedException(path, new Win32Exception(Marshal.GetLastWin32Error()));
+				if (Kernel32.DeleteFile(path)) {
+					return true;
+				}
 			}
 
-			return true;
+			var errorcode = Marshal.GetLastWin32Error();
+
+			if (errorcode == Kernel32.ERROR_ACCESS_DENIED) {
+				throw new FileAccessDeniedException(path, new Win32Exception(errorcode));
+			}
+
+			throw new FileNotDeletedException(path, new Win32Exception(errorcode));
 		}
 
 		public bool RemoveDirectory(string path) {
@@ -30,13 +39,22 @@ namespace PathTooLong {
 			if (path == null) {
 				throw new ArgumentNullException(nameof(path));
 			}
-			
-			if (!Kernel32.RemoveDirectory(path)) {
 
-				throw new DirectoryNotDeletedException(path, new Win32Exception(Marshal.GetLastWin32Error()));
+			int attempt = 0;
+			while (attempt++ < MAX_RETRY_COUNT) {
+
+				if (Kernel32.RemoveDirectory(path)) {
+					return true;
+				}
 			}
 
-			return true;
+			var errorcode = Marshal.GetLastWin32Error();
+
+			if (errorcode == Kernel32.ERROR_ACCESS_DENIED) {
+				throw new DirectoryAccessDeniedException(path, new Win32Exception(errorcode));
+			}
+
+			throw new DirectoryNotDeletedException(path, new Win32Exception(errorcode));
 		}
 
 		public FileAttributes GetFileAttributes(string path) {
@@ -85,10 +103,10 @@ namespace PathTooLong {
 			var errorcode = Marshal.GetLastWin32Error();
 
 			if (errorcode == Kernel32.ERROR_ACCESS_DENIED) {
-				throw new Win32Exception(errorcode);
+				throw new FileAccessDeniedException(destination, new Win32Exception(errorcode));
 			}
 			
-			throw new Win32Exception(errorcode);
+			throw new CopyFileException(destination, new Win32Exception(errorcode));
 		}
 
 		public void CreateDirectory(string path) {
@@ -108,10 +126,10 @@ namespace PathTooLong {
 			var errorcode = Marshal.GetLastWin32Error();
 
 			if (errorcode == Kernel32.ERROR_ACCESS_DENIED) {
-				throw new Win32Exception(errorcode);
+				throw new DirectoryAccessDeniedException(path, new Win32Exception(errorcode));
 			}
 
-			throw new Win32Exception(errorcode);
+			throw new CreateDirectoryException(path, new Win32Exception(errorcode));
 		}
 	}
 }
