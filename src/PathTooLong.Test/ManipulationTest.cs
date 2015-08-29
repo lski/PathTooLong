@@ -22,7 +22,7 @@ namespace PathTooLong.Test {
 		[TestMethod]
 		public void DeleteItemTest() {
 
-			var path = _paths.Combine(_baseDirectory, "manip/to-delete.txt");
+			var path = _paths.Combine(_baseDirectory, "delete/to-delete.txt");
 
 			CreateFile(path, "This should be deleted");
 
@@ -38,7 +38,7 @@ namespace PathTooLong.Test {
 		[TestMethod]
 		public void DeleteFolderTest() {
 
-			var folder1 = _paths.Combine(_baseDirectory, "manip/inner");
+			var folder1 = _paths.Combine(_baseDirectory, "delete/inner");
 			var folder2 = _paths.Combine(folder1, "inner2");
 			var file = _paths.Combine(folder2, "to-delete.txt");
 
@@ -58,7 +58,7 @@ namespace PathTooLong.Test {
 		[TestMethod]
 		public void SetAttributeTest() {
 
-			var path = _paths.Combine(_baseDirectory, "manip/tmp-file.txt");
+			var path = _paths.Combine(_baseDirectory, "attribute/tmp-file.txt");
 
 			CreateFile(path, "This should get deleted");
 
@@ -78,8 +78,8 @@ namespace PathTooLong.Test {
 		[TestMethod]
 		public void CopyFileTest() {
 
-			var path = _paths.Combine(_baseDirectory, "manip/tmp-file.txt");
-			var dest = _paths.Combine(_baseDirectory, "manip/tmp-file-copy.txt");
+			var path = _paths.Combine(_baseDirectory, "copy/tmp-file.txt");
+			var dest = _paths.Combine(_baseDirectory, "copy/tmp-file-copy.txt");
 
 			CreateFile(path, "This should get deleted");
 
@@ -101,9 +101,9 @@ namespace PathTooLong.Test {
 		[TestMethod]
 		public void CopyFolderTest() {
 
-			var path = _paths.Combine(_baseDirectory, "manip/tmp-folder");
+			var path = _paths.Combine(_baseDirectory, "copy/tmp-folder");
 			var pathFile = _paths.Combine(path, "temp-file.txt");
-			var dest = _paths.Combine(_baseDirectory, "manip/tmp-folder2");
+			var dest = _paths.Combine(_baseDirectory, "copy/tmp-folder2");
 			var destFile = _paths.Combine(dest, "temp-file.txt");
 
 			_scanner.Exists(dest).Should().BeFalse("The destination folder should not already exist");

@@ -80,8 +80,9 @@
     <Content Include="search\search-file-01.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="attribute\" />
     <Folder Include="copy\" />
-    <Folder Include="manip\" />
+    <Folder Include="delete\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
