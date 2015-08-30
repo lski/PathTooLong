@@ -35,6 +35,12 @@ namespace PathTooLong {
 		/// Note that means it always returns an FileAttibutes object, regardless of whether the file/directory exists.
 		/// </summary>
 		/// <exception cref="ArgumentNullException"></exception>
+		FileAttributes Attributes(string path);
+
+		/// <summary>
+		/// <see cref="Attributes(string)"/>
+		/// </summary>
+		[Obsolete("Use Attributes(path) instead")]
 		FileAttributes GetAttributes(string path);
 
 		/// <summary>

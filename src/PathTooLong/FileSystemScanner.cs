@@ -58,11 +58,18 @@ namespace PathTooLong {
 		/// Always returns an FileAttibutes object, regardless of whether the file/directory exists.
 		/// </summary>
 		/// <exception cref="ArgumentNullException"></exception>
-		public FileAttributes GetAttributes(string path) {
+		public FileAttributes Attributes(string path) {
 
 			var parsedPath = _pathUtility.ParsePath(path);
 
 			return _win32IO.GetFileAttributes(parsedPath);
+		}
+
+		/// <summary>
+		/// <see cref="Attributes(string)"/>
+		/// </summary>
+		public FileAttributes GetAttributes(string path) {
+			return Attributes(path);
 		}
 
 		/// <summary>

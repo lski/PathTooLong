@@ -17,6 +17,16 @@ namespace PathTooLong {
 		/// <exception cref="Exceptions.NotDeletedException"></exception>
 		/// <exception cref="Exceptions.SetAttributesException"></exception>
 		void Delete(string path);
+		
+		/// <summary>
+		/// Deletes either a file/directory at the location passed.
+		/// 
+		/// Note: If an item does not have the correct attributes to delete, it will attempt to change them
+		/// </summary>
+		/// <exception cref="ArgumentNullException"></exception>
+		/// <exception cref="Exceptions.NotDeletedException"></exception>
+		/// <exception cref="Exceptions.SetAttributesException"></exception>
+		void Delete(FileSystemData path);
 
 		/// <summary>
 		/// Deletes a file from the system
@@ -55,9 +65,30 @@ namespace PathTooLong {
 		/// If the destination exists and overright = false then it will error, if overwrite = true then it will merge if a directory or delete and copy if a file. 
 		/// </summary>
 		/// <param name="source">The path of the item to copy</param>
-		/// <param name="destination"></param>
-		/// <param name="overwrite"></param>
+		/// <param name="destination">The path of that you want to copy to</param>
+		/// <param name="overwrite">Whether to overwrite/merge if the destination already exists</param>
+		/// <exception cref="ArgumentNullException"></exception>
+		/// <exception cref="Exceptions.PathExistsException">If overwrite = false and the destination exists</exception>
+		/// <exception cref="Exceptions.CreateDirectoryException">If copying a folder and an error happens creating the directory structure</exception>
+		/// <exception cref="Exceptions.CopyFileException"></exception>
+		/// <exception cref="Exceptions.AccessDeniedException"></exception>
 		void Copy(string source, string destination, bool overwrite = false);
+
+		/// <summary>
+		/// Copies an item located at the source to the destination. 
+		/// 
+		/// If the item is a file then it simply copies it, if the item is a directory it recursively copies the files from each sub directory. 
+		/// If the destination exists and overright = false then it will error, if overwrite = true then it will merge if a directory or delete and copy if a file. 
+		/// </summary>
+		/// <param name="source">The path of the item to copy</param>
+		/// <param name="destination">The path of that you want to copy to</param>
+		/// <param name="overwrite">Whether to overwrite/merge if the destination already exists</param>
+		/// <exception cref="ArgumentNullException"></exception>
+		/// <exception cref="Exceptions.PathExistsException">If overwrite = false and the destination exists</exception>
+		/// <exception cref="Exceptions.CreateDirectoryException">If copying a folder and an error happens creating the directory structure</exception>
+		/// <exception cref="Exceptions.CopyFileException"></exception>
+		/// <exception cref="Exceptions.AccessDeniedException"></exception>
+		void Copy(FileSystemData source, string destination, bool overwrite = false);
 
 		/// <summary>
 		/// Copies a file to the destination. 
@@ -67,6 +98,10 @@ namespace PathTooLong {
 		/// <param name="source"></param>
 		/// <param name="destination"></param>
 		/// <param name="overwrite"></param>
+		/// <exception cref="ArgumentNullException"></exception>
+		/// <exception cref="Exceptions.PathExistsException">If overwrite = false and the destination exists</exception>
+		/// <exception cref="Exceptions.CopyFileException"></exception>
+		/// <exception cref="Exceptions.FileAccessDeniedException"></exception>
 		void Copy(FileData source, string destination, bool overwrite = false);
 
 		/// <summary>
@@ -78,6 +113,11 @@ namespace PathTooLong {
 		/// <param name="source"></param>
 		/// <param name="destination"></param>
 		/// <param name="overwrite"></param>
+		/// <exception cref="ArgumentNullException"></exception>
+		/// <exception cref="Exceptions.PathExistsException">If overwrite = false and the destination exists</exception>
+		/// <exception cref="Exceptions.CreateDirectoryException">If an error happens creating the directory structure</exception>
+		/// <exception cref="Exceptions.CopyFileException"></exception>
+		/// <exception cref="Exceptions.DirectoryAccessDeniedException"></exception>
 		void Copy(DirectoryData source, string destination, bool overwrite = false);
 
 		//void Move(string source, string destination, bool overwrite = false);

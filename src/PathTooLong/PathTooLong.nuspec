@@ -8,7 +8,7 @@
         <iconUrl>https://www.gravatar.com/avatar/e28af3724cd70eb082bdb84063964ea1</iconUrl>
 		<licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-		<tags>FileSystem FileDirectory Delete Scan PathTooLongException</tags>
+		<tags>FileSystem FileDirectory Delete Copy Scan PathTooLongException</tags>
 		<description>$description$</description>
 	</metadata>
 	<!--

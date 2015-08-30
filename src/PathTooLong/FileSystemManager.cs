@@ -35,19 +35,22 @@ namespace PathTooLong {
 				throw new PathNotFoundException(source);
 			}
 
-			var fsd = _scanner.GetFileSystemData(source);
+			Copy(_scanner.GetFileSystemData(source), destination, overwrite);
+		}
+		
+		public void Copy(FileSystemData source, string destination, bool overwrite = false) {
 
-			if (fsd.IsDirectory) {
-				Copy((DirectoryData)fsd, destination, overwrite);
+			if (source.IsDirectory) {
+				Copy((DirectoryData)source, destination, overwrite);
 			}
 			else {
-				Copy((FileData)fsd, destination, overwrite);
+				Copy((FileData)source, destination, overwrite);
 			}
 		}
 
 		public void Copy(DirectoryData source, string destination, bool overwrite = false) {
 
-			var attributes = _scanner.GetAttributes(destination);
+			var attributes = _scanner.Attributes(destination);
 			var exists = attributes.Exists();
 
 			if (exists && !overwrite) {
@@ -56,11 +59,13 @@ namespace PathTooLong {
 
 			var destPath = _paths.ParsePath(destination);
 
-			// If exists then simple fill it, unless its a file then delete it. If it doesnt exist create it
+			// If exists then simple fill the directory
+			// If it doesnt exist create it
 			if (!exists) {
 				_win32IO.CreateDirectory(destPath);
 				_win32IO.SetFileAttributes(destPath, source.Attributes);
 			}
+			// The destination is a file, so delete it as we cant fill a file as a directory
 			else if(attributes.IsFile()) {
 
 				_win32IO.DeleteFile(destPath);
@@ -104,11 +109,16 @@ namespace PathTooLong {
 
 			var fsd = _scanner.GetFileSystemData(path);
 
-			if (fsd.IsDirectory) {
-				Delete((DirectoryData)fsd);
-			} 
+			Delete(fsd);
+		}
+		
+		public void Delete(FileSystemData source) {
+
+			if (source.IsDirectory) {
+				Delete((DirectoryData)source);
+			}
 			else {
-				Delete((FileData)fsd);
+				Delete((FileData)source);
 			}
 		}
 
