@@ -44,7 +44,7 @@ namespace PathTooLong {
 		FileAttributes GetAttributes(string path);
 
 		/// <summary>
-		/// Returns information about the directory or file in the path
+		/// Returns information about the directory or file in the path. Throws a PathNotFoundException if it doesnt exist.
 		/// </summary>
 		/// <exception cref="ArgumentNullException"></exception>
 		/// <exception cref="PathNotFoundException"></exception>

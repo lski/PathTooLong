@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>PathTooLong</id>
+        <version>0.2.2</version>
+        <authors>Lee Cooper</authors>
+        <owners>Lee Cooper</owners>
+        <licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+        <projectUrl>https://github.com/lski/PathTooLong</projectUrl>
+        <iconUrl>https://www.gravatar.com/avatar/e28af3724cd70eb082bdb84063964ea1</iconUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>File system functions for manipulating and scanning paths that would normally throw a 'PathTooLongException' when using the using standard System.IO functions.</description>
+        <tags>FileSystem FileDirectory Delete Copy Scan PathTooLongException</tags>
+    </metadata>
+    <files>
+        <file src="..\src\PathTooLong\bin\release\PathTooLong.dll" target="lib\net40\PathTooLong.dll" />
+		<file src="..\src\PathTooLong\bin\release\PathTooLong.pdb" target="lib\net40\PathTooLong.pdb" />
+        <file src="..\src\PathTooLong\bin\release\PathTooLong.xml" target="lib\net40\PathTooLong.xml" />
+    </files>
+</package>
