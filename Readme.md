@@ -1,5 +1,11 @@
 # PathTooLong
 
+## Deprecated
+
+__Windows now has a feature for enabling long filenames on NTFS drives, it is recommended that you use that instead.__
+
+-----
+
 File system functions for manipulating and scanning paths that would normally throw a 'PathTooLongException' when using the using standard System.IO functions. This is becomming increasing important as tools like node/npm can create deep file structures that are then difficult to remove.
 
 The API is split into two parts, a FileSystemScanner which is used to scan the file system and find information about file system objects and a FileSystemManager which is used to manipulate file system objects such as delete or copy them.
